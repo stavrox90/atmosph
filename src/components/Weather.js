@@ -1,5 +1,10 @@
 import React from 'react'
 
+const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
 const Weather = props => (
     <div className="weather__info">
         { 
@@ -9,17 +14,17 @@ const Weather = props => (
         }
         { 
             props.temperature && <p className="weather__key">Temperature:
-            <span className="weather__value"> {`${parseInt (props.temperature, 10)}°C`}</span>
+            <span className="weather__value"> {`${parseInt (props.temperature, 10)}`} °C</span>
             </p> 
         }
         { 
             props.humidity && <p className="weather__key">Humidity:
-            <span className="weather__value"> { props.humidity }</span>
+            <span className="weather__value"> { props.humidity } RH</span>
             </p> 
         }
         { 
             props.description && <p className="weather__key">Conditions:
-            <span className="weather__value p.capitalize"> { props.description.capitalize() }</span>
+            <span className="weather__value"> { capitalize (props.description) }</span>
             </p>
         }
         {
