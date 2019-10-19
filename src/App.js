@@ -3,9 +3,7 @@ import React from "react";
 import Titles from "./components/Titles";
 import Form from "./components/Form";
 import Weather from "./components/Weather";
-
-// Weather API
-const API_KEY = "561dcaaafc74547f387afe9ff5879276";
+import API_KEY from "./config/api";
 
 class App extends React.Component {
   state = {
@@ -16,6 +14,7 @@ class App extends React.Component {
     description: undefined,
     error: undefined
   }
+
   getWeather = async (e) => {
     e.preventDefault();
     const city = e.target.elements.city.value;
@@ -47,27 +46,23 @@ class App extends React.Component {
       <div>
         <div className="wrapper">
           <div className="main">
-            <div className="container">
-              <div className="row">
-                <div className="col-xs-5 title-container">
-                  <Titles />
-                </div>
-                <div className="col-xs-7 form-container">
-                  <Form getWeather={this.getWeather} />
-                  <Weather 
-                    temperature={this.state.temperature} 
-                    humidity={this.state.humidity}
-                    city={this.state.city}
-                    country={this.state.country}
-                    description={this.state.description}
-                    error={this.state.error}
-                  />
-                </div>
-              </div>
+            <div className="title-container">
+              <Titles />
+            </div>
+            <div className="form-container">
+              <Form getWeather={this.getWeather} />
+              <Weather
+                temperature={this.state.temperature}
+                humidity={this.state.humidity}
+                city={this.state.city}
+                country={this.state.country}
+                description={this.state.description}
+                error={this.state.error}
+              />
             </div>
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 };
@@ -75,5 +70,14 @@ class App extends React.Component {
 export default App;
 
 
+{/* 
 
-
+<Form getWeather={this.getWeather} />
+  <Weather
+    temperature={this.state.temperature}
+    humidity={this.state.humidity}
+    city={this.state.city}
+    country={this.state.country}
+    description={this.state.description}
+    error={this.state.error}
+  /> */}
