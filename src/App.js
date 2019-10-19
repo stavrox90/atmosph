@@ -43,26 +43,25 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div>
-        <div className="wrapper">
-          <div className="main">
-            <div className="title-container">
-              <Titles />
-            </div>
-            <div className="form-container">
-              <Form getWeather={this.getWeather} />
-              <Weather
-                temperature={this.state.temperature}
-                humidity={this.state.humidity}
-                city={this.state.city}
-                country={this.state.country}
-                description={this.state.description}
-                error={this.state.error}
-              />
-            </div>
+      <div className="wrapper">
+        <div className="main">
+          <div className="title-container">
+            <Titles />
           </div>
+          <div className="form-container">
+            <Form getWeather={this.getWeather} />
+            <Weather
+              temperature={this.state.temperature}
+              humidity={this.state.humidity}
+              city={this.state.city}
+              country={this.state.country}
+              description={this.state.description}
+              error={this.state.error}
+            />
+          </div>
+          <p className="footer">© Filus Inra 2019</p>
         </div>
-      </div >
+      </div>
     );
   }
 };
