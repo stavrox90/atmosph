@@ -1,11 +1,12 @@
-import React from "react";
+import React, { Component } from "react";
 
 import Titles from "./components/Titles";
 import Form from "./components/Form";
 import Weather from "./components/Weather";
-import API_KEY from "./config/api";
 
-class App extends React.Component {
+const API_KEY = "561dcaaafc74547f387afe9ff5879276";
+
+class App extends Component {
   state = {
     temperature: undefined,
     city: undefined,
@@ -59,8 +60,10 @@ class App extends React.Component {
               error={this.state.error}
             />
           </div>
+          <div className="footer">
+            <p>© Filus Inra 2019</p>
+          </div>
         </div>
-        <p className="footer">© Filus Inra 2019</p>
       </div>
     );
   }

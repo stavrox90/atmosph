@@ -139,11 +139,11 @@ button:active {
 
 .footer {
   color: white;
-  bottom : 1px;
-  height : 40px;
+  bottom : 0;
   margin-top : 40px;
   text-align: center;
   vertical-align: middle;
   position: fixed;
   width: 90%;
+  padding-bottom: 10px;
 }
