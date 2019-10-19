@@ -60,6 +60,7 @@ body {
   align-items: center;
   text-align: center;
   margin-top: 5vh;
+  padding-bottom: 2vh;
 }
 
 input[type="text"] {
