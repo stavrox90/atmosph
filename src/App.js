@@ -59,8 +59,8 @@ class App extends React.Component {
               error={this.state.error}
             />
           </div>
-          <p className="footer">© Filus Inra 2019</p>
         </div>
+        <p className="footer">© Filus Inra 2019</p>
       </div>
     );
   }
