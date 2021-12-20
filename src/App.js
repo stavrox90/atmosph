@@ -1,72 +1,99 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import img from "./img/bg.jpg"
+// require('dotenv').config()
+// import * as dotenv from "dotenv"
 
-import Titles from "./components/Titles";
-import Form from "./components/Form";
-import Weather from "./components/Weather";
+const API_KEY = process.env.REACT_APP_KEY
 
-const API_KEY = "561dcaaafc74547f387afe9ff5879276";
+const App = () => {
+  const [data, setData] = useState(null)
+  const [city, setCity] = useState("")
+  const [country, setCountry] = useState("")
+  const [temperature, setTemperature] = useState("")
+  const [humidity, setHumidity] = useState("")
+  const [description, setDescription] = useState("")
+  const [windSpeed, setWindSpeed] = useState("")
+  const [error, setError] = useState(false)
 
-class App extends Component {
-  state = {
-    temperature: undefined,
-    city: undefined,
-    country: undefined,
-    humidity: undefined,
-    description: undefined,
-    error: undefined
+  const fetchWeather = () => {
+    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}&units=metric`)
+      .then(res => res.json())
+      .then(json => setData(json))
   }
 
-  getWeather = async (e) => {
-    e.preventDefault();
-    const city = e.target.elements.city.value;
-    const country = e.target.elements.country.value;
-    const api_call = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}&units=metric`);
-    const data = await api_call.json();
-    if (city && country) {
-      this.setState({
-        temperature: data.main.temp,
-        city: data.name,
-        country: data.sys.country,
-        humidity: data.main.humidity,
-        description: data.weather[0].description,
-        error: ""
-      });
-    } else {
-      this.setState({
-        temperature: undefined,
-        city: undefined,
-        country: undefined,
-        humidity: undefined,
-        description: undefined,
-        error: "Please enter the values."
-      });
+
+  useEffect(() => {
+    if (data) {
+      if (data.cod == "200") {
+        setTemperature(data.main.temp)
+        setHumidity(data.main.humidity)
+        setDescription(data.weather[0].description)
+        setWindSpeed(data.wind.speed)
+        setError(false)
+      }
+      else {
+        setError(true)
+      }
     }
-  }
-  render() {
-    return (
-      <div className="wrapper">
-        <div className="main">
-          <div className="title-container">
-            <Titles />
+  }, [data])
+
+  return (
+    <div className="container position-absolute top-50 start-50 translate-middle">
+      <div className="card border-info pb-3">
+        <img src={img} className="card-img-top" style={{ height: "20vh" }} alt="..." />
+
+        <div className="card-body">
+          <h5 className="card-title m-2">
+            <h1 className="title-container__title">Atmosph</h1>
+            <p className="title-container__subtitle">Weather finder app</p>
+          </h5>
+
+          {/* <span className="position-absolute" style={{ top: '20vh', left: '30vw' }}>
+            <i style={{ fontSize: '5rem', color: 'cornflowerblue' }} className="bi bi-cloud-drizzle"></i>
+          </span> */}
+
+
+          <div className="d-flex flex-row">
+            <input className="m-2 col border-primary form-control" onInput={e => setCity(e.target.value)} type="text" name="city" placeholder="City..." />
+            <input className="m-2 col border-primary form-control" onInput={e => setCountry(e.target.value)} type="text" name="country" placeholder="Country..." />
+            <button className="m-2 btn btn-sm btn-outline-primary" onClick={fetchWeather}>Submit</button>
           </div>
-          <div className="form-container">
-            <Form getWeather={this.getWeather} />
-            <Weather
-              temperature={this.state.temperature}
-              humidity={this.state.humidity}
-              city={this.state.city}
-              country={this.state.country}
-              description={this.state.description}
-              error={this.state.error}
-            />
-          </div>
-          <div className="footer">
-            <p>© Filus Inra 2019</p>
-          </div>
+
+          {data && !error &&
+            (
+              <table className="table table-responsive table-sm table-borderless mt-4">
+                <thead>
+                  <tr>
+                    <th>Temperature</th>
+                    <th>Description</th>
+                    <th>Wind Speed</th>
+                    <th>Humidity</th>
+                  </tr>
+                </thead>
+                <tbody className="text-capitalize">
+                  <tr>
+                    <td>{temperature}°C</td>
+                    <td>{description}</td>
+                    <td>{windSpeed} mph</td>
+                    <td>{humidity} Relative Humidity</td>
+                  </tr>
+                </tbody>
+              </table>
+            )
+          }
+
+          {error &&
+            (
+              <div className="text-center text-danger mt-5 mx-2 py-2 card border-danger">
+                <span>Please fill in the city and country name</span>
+              </div>
+            )
+          }
+
         </div>
       </div>
-    );
-  }
-};
+    </div>
+  )
+}
 
 export default App;
