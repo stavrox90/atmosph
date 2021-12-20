@@ -24,7 +24,7 @@ const App = () => {
 
   useEffect(() => {
     if (data) {
-      if (data.cod == "200") {
+      if (data.cod === "200") {
         setTemperature(data.main.temp)
         setHumidity(data.main.humidity)
         setDescription(data.weather[0].description)
